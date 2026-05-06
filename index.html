@@ -64,7 +64,6 @@
         }
 
         .btn-close { background: rgba(255, 50, 50, 0.2); font-size: 1.2rem; }
-        .btn-close:active { background: rgba(255, 0, 0, 0.5); }
 
         .container { padding: 20px; max-width: 1100px; margin: 0 auto; }
 
@@ -93,14 +92,6 @@
             backdrop-filter: blur(5px);
         }
 
-        .card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--glossy);
-            pointer-events: none;
-        }
-
         .card:active { transform: scale(0.95); border-color: var(--acc); }
 
         .list-item {
@@ -111,12 +102,10 @@
             border-left: 5px solid var(--acc);
             font-size: 1.2rem;
             cursor: pointer;
-            backdrop-filter: blur(10px);
         }
 
         .detail {
             backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 25px; 
@@ -144,7 +133,6 @@
             text-align: center;
         }
 
-        .search-container { margin-bottom: 20px; }
         #search-input {
             width: 100%;
             background: rgba(255, 255, 255, 0.08);
@@ -154,8 +142,12 @@
             color: white;
             font-size: 1.1rem;
             outline: none;
-            backdrop-filter: blur(5px);
+            box-sizing: border-box;
         }
+
+        ul { list-style: none; padding: 0; }
+        li { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; gap: 10px; }
+        b { color: var(--acc); min-width: 80px; display: inline-block; }
 
         .hidden { display: none !important; }
 
@@ -176,6 +168,7 @@
 <div class="container" id="app"></div>
 
 <script type="text/javascript">
+// Passwort-Schutz
 const pw = "5556";
 if (sessionStorage.getItem("access") !== "true") {
     let input = prompt("Bitte Passwort eingeben:");
@@ -187,8 +180,8 @@ if (sessionStorage.getItem("access") !== "true") {
     }
 }
 
-// Hier deine Rezepte wieder einfügen
-const rezepte = [   
+// Rezepte-Datenbank
+const rezepte = [ 
 
             /* DEINE REZEPTE HIER */
 {
@@ -1263,15 +1256,14 @@ const rezepte = [
         "en": "1. Dough & Gluten: Homogeneously mix eggs, salt, and a little nutmeg. Work in the flour by hand. Add sparkling water only if necessary (dough must be firm). Beat vigorously with some oil until the dough bubbles. Form into a ball with a ladle of oil and let rest warm under a cloth until velvety.<br><br>2. Setup: Boil a large pot (rim oiled) of heavily salted water. Prepare a 10-liter bucket of ice water. Important: Completely dip the spaetzle press and utensils in oil.<br><br>3. Cooking: Bring water to a boil, then lower the flame. Press the dough gently for long noodles. Once they float: wait 1 min, flip, let steep for 2 min. Then immediately shock in ice water.<br><br>4. Drying & Finish: Place the noodles in a sieve on top of the bucket near air supply. Toss every 5 min until the surface is dry. Note: Packing them too moist drastically reduces shelf life."
     }
 }
-    /* DEINE REZEPTE HIER */ ]; 
-// --- Zentrale Variablen ---
-// WICHTIG: Nur eine Deklaration von isIOS erlaubt
+    /* DEINE REZEPTE HIER */ ];
+// Zentrale Variablen
 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 let currentLang = localStorage.getItem("lang") || "de";
 let stack = ['home'];
 let curP = "";
 
-// --- Sprach-Logik ---
+// Sprach-Helper
 const t = (field) => {
     if (typeof field === 'object' && field !== null) {
         return field[currentLang] || field['de'] || "";
@@ -1285,15 +1277,14 @@ window.toggleLang = () => {
     render(); 
 };
 
-// --- App-Logik ---
+// Suche
 window.handleSearch = (query) => {
     const content = document.getElementById('home-content');
     if (!content) return;
     const q = query.toLowerCase().trim();
     
     if (q.length < 2) {
-        const pSet = [...new Set(rezepte.map(r => r.posten))].filter(p => p).sort();
-        content.innerHTML = `<div class="grid">${pSet.map(p => `<div class="card" onclick="openP('${p}')">${p}</div>`).join('')}</div>`;
+        renderHomeContent();
         return;
     }
 
@@ -1304,7 +1295,7 @@ window.handleSearch = (query) => {
 
     if (filtered.length > 0) {
         content.innerHTML = `
-            <div style="font-size: 0.9rem; color: var(--acc); margin: 20px 0 10px 0; text-transform: uppercase;">${filtered.length} Treffer</div>
+            <div style="font-size: 0.9rem; color: var(--acc); margin: 20px 0 10px 0;">${filtered.length} TREFFER</div>
             <div class="search-list">
                 ${filtered.map(r => `
                     <div class="list-item" onclick="openR('${r.id}')">
@@ -1317,6 +1308,12 @@ window.handleSearch = (query) => {
     }
 };
 
+function renderHomeContent() {
+    const content = document.getElementById('home-content');
+    const pSet = [...new Set(rezepte.map(r => r.posten))].filter(p => p).sort();
+    content.innerHTML = `<div class="grid">${pSet.map(p => `<div class="card" onclick="openP('${p}')">${p}</div>`).join('')}</div>`;
+}
+
 function render() {
     const app = document.getElementById('app');
     const tit = document.getElementById('titel');
@@ -1325,24 +1322,20 @@ function render() {
     const view = stack[stack.length - 1];
 
     window.scrollTo(0, 0);
-
     const langBtnHtml = `<button class="btn" onclick="toggleLang()" style="margin-left:10px; min-width:40px;">${currentLang.toUpperCase()}</button>`;
 
     if (view === 'home') {
         tit.innerText = currentLang === 'de' ? "POSTEN" : "STATIONS";
         back.classList.add('hidden');
-        
         if (closeBtn) isIOS ? closeBtn.classList.add('hidden') : closeBtn.classList.remove('hidden');
         
-        const pSet = [...new Set(rezepte.map(r => r.posten))].filter(p => p).sort();
         app.innerHTML = `
             <div style="display:flex; gap:10px; margin-bottom:20px;">
-                <input type="text" id="search-input" placeholder="${currentLang === 'de' ? 'Suchen...' : 'Search...'}" oninput="handleSearch(this.value)" autocomplete="off" style="flex-grow:1; background: rgba(255, 255, 255, 0.08); border: 1px solid var(--glass-border); border-radius: 12px; padding: 15px 20px; color: white;">
+                <input type="text" id="search-input" placeholder="${currentLang === 'de' ? 'Suchen...' : 'Search...'}" oninput="handleSearch(this.value)" autocomplete="off" style="flex-grow:1;">
                 ${langBtnHtml}
             </div>
-            <div id="home-content">
-                <div class="grid">${pSet.map(p => `<div class="card" onclick="openP('${p}')">${p}</div>`).join('')}</div>
-            </div>`;
+            <div id="home-content"></div>`;
+        renderHomeContent();
     } else {
         back.classList.remove('hidden');
         if (closeBtn) closeBtn.classList.add('hidden');
@@ -1356,8 +1349,6 @@ function render() {
             if (r) {
                 tit.innerText = currentLang === 'de' ? "REZEPT" : "RECIPE";
                 const basisFaktor = 1;
-                
-                // Anleitung formatieren (Array oder String)
                 const rawA = t(r.a);
                 const formatA = Array.isArray(rawA) ? rawA.join('<br>') : rawA.replace(/\n/g, '<br>');
 
@@ -1379,8 +1370,9 @@ function render() {
 
 function renderZutaten(r, faktor) {
     return r.z.map(i => {
-        // Logik für n.B. gemäß Vorgabe
-        let wertAnzeige = (i.m === 0 || i.m === "" || String(i.m).toLowerCase().includes("n.b")) ? "n.B." : `${(i.m * faktor).toFixed(2).replace('.00','')} ${i.e === "g" ? "gr" : i.e}`;
+        let wertAnzeige = (i.m === 0 || i.m === "" || String(i.m).toLowerCase().includes("n.b")) 
+            ? "n.B." 
+            : `${(i.m * faktor).toFixed(2).replace('.00','')} ${i.e === "g" ? "gr" : i.e}`;
         return `<li><b>${wertAnzeige}</b> <span>${t(i.n)}</span></li>`;
     }).join('');
 }
@@ -1397,18 +1389,7 @@ window.openR = (id) => { stack.push(String(id)); render(); };
 window.goB = () => { stack.pop(); render(); };
 window.exitAppSafe = () => { if (window.Capacitor) Capacitor.Plugins.App.exitApp(); };
 
-if (window.Capacitor && Capacitor.Plugins.App) {
-    Capacitor.Plugins.App.addListener('backButton', (data) => {
-        if (stack.length > 1) {
-            goB();
-        } else {
-            console.log("App-Exit verhindert.");
-        }
-    });
-}
-
 render();
 </script>
 </body>
 </html>
-
