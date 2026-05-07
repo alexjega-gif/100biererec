@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>100 Biere - Rezepte 2026</title>
+    <title>Rezepte 2026</title>
     <link rel="apple-touch-icon" href="icon.png">
     <meta name="robots" content="noindex, nofollow">
     <style>
@@ -11,8 +11,9 @@
             --bg-dark: #0a0a0a;
             --acc: #d4af37;
             --txt-beige: #f4f1ea;
-            --border-gold: rgba(212, 175, 55, 0.4);
-            --glass-dark: rgba(20, 20, 20, 0.9);
+            --border-gold: rgba(212, 175, 55, 0.3);
+            /* Glass-Effekt Farbe */
+            --glass: rgba(25, 25, 25, 0.7);
         }
 
         body {
@@ -25,7 +26,7 @@
             padding-bottom: calc(50px + env(safe-area-inset-bottom));
         }
 
-        /* Wasserzeichen (Das kleine B100 Icon) */
+        /* Wasserzeichen Hintergrund */
         body::before {
             content: "";
             position: fixed;
@@ -41,9 +42,9 @@
             justify-content: space-between;
             align-items: center;
             padding: calc(20px + env(safe-area-inset-top)) 30px 20px 30px;
-            background: rgba(10, 10, 10, 0.9);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -56,7 +57,6 @@
             height: 50px;
             background: url("Logo100.png") no-repeat left center;
             background-size: contain;
-            filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.2));
         }
 
         #titel {
@@ -79,9 +79,11 @@
             font-weight: bold;
             text-transform: uppercase;
             font-size: 0.75rem;
+            transition: transform 0.1s ease;
         }
 
-        .btn-close { background: #cc0000; color: white; border: none; font-size: 1rem; }
+        /* Button-Drück-Effekt für alle Buttons */
+        .btn:active, .btn-close:active { transform: scale(0.92); }
 
         .container { padding: 20px; max-width: 1100px; margin: 0 auto; }
 
@@ -89,52 +91,70 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 25px;
-            margin-top: 20px;
+            margin-top: 30px;
         }
 
+        /* Karten mit Glass-Effekt & Button-Gefühl */
         .card {
-            background: var(--glass-dark);
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             height: 140px;
             border-radius: 12px;
             border: 1px solid var(--border-gold);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             font-weight: 500;
             cursor: pointer;
+            position: relative;
             transition: all 0.2s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
             color: var(--acc);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
 
-        .card:active { transform: scale(0.95); border-color: var(--acc); }
+        /* Drück-Effekt für Karten */
+        .card:active { 
+            transform: scale(0.95); 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.8);
+            border-color: var(--acc);
+        }
 
+        /* Listen-Items mit Glass-Effekt & Button-Gefühl */
         .list-item {
-            background: #111;
+            background: var(--glass);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             padding: 20px;
-            margin-bottom: 12px;
-            border-radius: 4px;
-            border-left: 4px solid var(--acc);
-            border-right: 1px solid var(--border-gold);
-            border-top: 1px solid var(--border-gold);
-            border-bottom: 1px solid var(--border-gold);
-            font-size: 1.1rem;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-gold);
+            border-left: 5px solid var(--acc);
+            font-size: 1.2rem;
             cursor: pointer;
-            color: var(--txt-beige);
+            transition: all 0.1s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .list-item:active {
+            transform: scale(0.98);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.6);
         }
 
         .detail {
-            background: #111;
+            background: rgba(20, 20, 20, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border-gold);
-            border-radius: 15px;
+            border-radius: 25px; 
             padding: 25px;
         }
 
         .rechner-box {
             background: rgba(212, 175, 55, 0.1);
+            backdrop-filter: blur(5px);
             padding: 15px;
             border-radius: 10px;
             margin-bottom: 25px;
@@ -152,14 +172,14 @@
             color: var(--acc);
             font-size: 1.4rem;
             text-align: center;
-            font-weight: bold;
         }
 
         #search-input {
             width: 100%;
-            background: #151515;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
             border: 1px solid var(--border-gold);
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 15px 20px;
             color: var(--acc);
             font-size: 1.1rem;
@@ -168,15 +188,15 @@
         }
 
         ul { list-style: none; padding: 0; }
-        li { padding: 12px 0; border-bottom: 1px solid rgba(212,175,55,0.1); display: flex; gap: 10px; }
-        b { color: var(--acc); min-width: 90px; display: inline-block; }
+        li { padding: 10px 0; border-bottom: 1px solid rgba(212,175,55,0.1); display: flex; gap: 10px; }
+        b { color: var(--acc); min-width: 80px; display: inline-block; }
 
         .hidden { display: none !important; }
 
         @media (max-width: 600px) {
-            #titel { font-size: 1.1rem; }
-            .header-logo { width: 120px; }
+            #titel { font-size: 1.2rem; }
             header { padding: calc(15px + env(safe-area-inset-top)) 15px 15px 15px; }
+            .header-logo { width: 140px; }
         }
     </style>
 </head>
@@ -185,7 +205,7 @@
 <header>
     <button id="back" class="btn hidden" onclick="goB()">Zurück</button>
     <div class="header-logo" id="logo-div"></div>
-    <div id="titel">POSTEN</div>
+    <div id="titel">START</div>
     <button id="close-app" class="btn-close hidden" onclick="exitAppSafe()">✕</button>
 </header>
 
@@ -199,7 +219,7 @@ if (sessionStorage.getItem("access") !== "true") {
     if (input === pw) {
         sessionStorage.setItem("access", "true");
     } else {
-        document.body.innerHTML = "<h1 style='color:#d4af37; text-align:center; margin-top:50px;'>Zugriff verweigert.</h1>";
+        document.body.innerHTML = "<h1 style='color:var(--acc); text-align:center; margin-top:50px;'>Zugriff verweigert.</h1>";
         window.stop();
     }
 }
@@ -1312,16 +1332,16 @@ window.handleSearch = (query) => {
 
     if (filtered.length > 0) {
         content.innerHTML = `
-            <div style="font-size: 0.8rem; color: var(--acc); margin: 20px 0 10px 0; text-transform: uppercase;">${filtered.length} Treffer</div>
+            <div style="font-size: 0.9rem; color: var(--acc); margin: 20px 0 10px 0; text-transform: uppercase;">${filtered.length} TREFFER</div>
             <div class="search-list">
                 ${filtered.map(r => `
                     <div class="list-item" onclick="openR('${r.id}')">
-                        <small style="display:block; font-size:0.7rem; color:var(--acc); opacity:0.7;">${r.posten}</small>
+                        <small style="display:block; font-size:0.7rem; opacity:0.6; color:var(--acc);">${r.posten}</small>
                         ${t(r.titel)}
                     </div>`).join('')}
             </div>`;
     } else {
-        content.innerHTML = `<div style="text-align:center; margin-top:50px; opacity:0.5;">Kein Rezept gefunden.</div>`;
+        content.innerHTML = `<div style="text-align:center; margin-top:50px; opacity:0.5;">${currentLang === 'de' ? 'Kein Rezept gefunden.' : 'No recipe found.'}</div>`;
     }
 };
 
@@ -1340,7 +1360,7 @@ function render() {
     const view = stack[stack.length - 1];
 
     window.scrollTo(0, 0);
-    const langBtnHtml = `<button class="btn" onclick="toggleLang()" style="min-width:40px;">${currentLang.toUpperCase()}</button>`;
+    const langBtnHtml = `<button class="btn" onclick="toggleLang()" style="margin-left:10px; min-width:40px;">${currentLang.toUpperCase()}</button>`;
 
     if (view === 'home') {
         tit.innerText = currentLang === 'de' ? "POSTEN" : "STATIONS";
@@ -1374,15 +1394,15 @@ function render() {
 
                 app.innerHTML = `
                     <div class="detail">
-                        <h2 style="font-weight:200; font-size:1.8rem; margin:0 0 20px 0; color:var(--acc);">${t(r.titel)}</h2>
+                        <h2 style="font-weight:200; font-size:2.2rem; margin:0 0 20px 0; color:var(--acc);">${t(r.titel)}</h2>
                         <div class="rechner-box">
                             <span>${currentLang === 'de' ? 'Menge anpassen:' : 'Adjust quantity:'}</span>
                             <input type="number" id="menge-input" inputmode="decimal" value="${basisFaktor}" oninput="liveUpdate('${r.id}')">
                         </div>
                         <h3 style="border-bottom:1px solid var(--acc); padding-bottom:5px;">${currentLang === 'de' ? 'Zutaten' : 'Ingredients'}</h3>
                         <ul id="dynamic-z-list">${renderZutaten(r, basisFaktor)}</ul>
-                        <h3 style="margin-top:30px; border-bottom:1px solid var(--acc); padding-bottom:5px;">${currentLang === 'de' ? 'Zubereitung' : 'Preparation'}</h3>
-                        <p style="line-height:1.8; margin-top:10px; color:var(--txt-beige);">${formatA}</p>
+                        <h3 style="margin-top:20px; border-bottom:1px solid var(--acc); padding-bottom:5px;">${currentLang === 'de' ? 'Zubereitung' : 'Preparation'}</h3>
+                        <p style="line-height:1.8; margin-top:10px;">${formatA}</p>
                     </div>`;
             }
         }
@@ -1412,5 +1432,6 @@ window.exitAppSafe = () => { if (window.Capacitor) Capacitor.Plugins.App.exitApp
 
 render();
 </script>
+
 </body>
 </html>
