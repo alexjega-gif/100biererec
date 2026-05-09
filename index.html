@@ -1387,7 +1387,7 @@ function render() {
                 <div class="detail">
                     <h2>${t(r.titel)}</h2>
                     <div class="rechner-box">
-                        <span>${currentLang === 'de' ? 'Portionen:' : 'Servings:'}</span>
+                        <span>${currentLang === 'de' ? 'Menge:' : 'Amount:'}</span>
                         <input type="number" id="menge-input" value="1" oninput="liveUpdate('${r.id}')">
                     </div>
                     <h3>${currentLang === 'de' ? 'Zutaten' : 'Ingredients'}</h3>
