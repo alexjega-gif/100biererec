@@ -238,6 +238,65 @@
         p { font-weight: 300; line-height: 1.8; }
 
         .hidden { display: none !important; }
+
+        /* --- Desktop Optimierung (Nur für Bildschirme breiter als 1024px) --- */
+@media (min-width: 1024px) {
+    /* Größere Grundschrift für bessere Lesbarkeit auf Distanz */
+    body {
+        font-size: 1.1rem;
+    }
+
+    /* Header-Titel im Desktop präsenter machen */
+    #titel {
+        font-size: 1.8rem;
+        letter-spacing: 4px;
+    }
+
+    /* Rezept-Überschrift deutlich vergrößern */
+    h2 {
+        font-size: 3.5rem;
+        margin-bottom: 25px;
+    }
+
+    /* Zutatenliste: Breitere Spalten für Mengen und größere Schrift */
+    ul li {
+        padding: 15px 0;
+    }
+
+    ul li b {
+        min-width: 140px; /* Mehr Platz für Mengenangaben */
+        font-size: 1.2rem;
+    }
+
+    ul li span {
+        font-size: 1.2rem;
+        padding-left: 20px;
+    }
+
+    /* Zubereitungstext (Paragraph) */
+    p {
+        font-size: 1.25rem;
+        line-height: 2;
+        max-width: 900px; /* Verhindert zu lange Zeilen (ermüdet das Auge) */
+    }
+
+    /* Suchfeld vergrößern */
+    #search-input {
+        padding: 25px;
+        font-size: 1.3rem;
+    }
+
+    /* Detail-Container bekommt mehr "Luft" */
+    .detail {
+        padding: 50px;
+    }
+
+    /* Grid-Karten auf Desktop etwas höher */
+    .card {
+        height: 180px;
+        font-size: 1.6rem;
+    }
+}
     </style>
 </head>
 <body>
