@@ -6,21 +6,26 @@
     <title>Rezepte 2026</title>
     <link rel="apple-touch-icon" href="icon.png">
     <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Google Fonts: Playfair Display für Titel & Lato für Text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --bg-dark: #000000;
             --acc: #d4af37;
             --txt-beige: #f4f1ea;
             --border-gold: rgba(212, 175, 55, 0.4);
-            
-            /* S25 Ultra Liquid Glass Specs */
             --liquid-glass: rgba(255, 255, 255, 0.05); 
             --iphone-blur: blur(15px) saturate(180%) brightness(120%);
             --ios-border: rgba(255, 255, 255, 0.18);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            /* Lato als Grundschrift */
+            font-family: 'Lato', -apple-system, sans-serif;
             background-color: var(--bg-dark);
             color: var(--txt-beige);
             margin: 0;
@@ -30,7 +35,7 @@
             overflow-x: hidden;
         }
 
-        /* Wasserzeichen Fix */
+        /* Wasserzeichen */
         body::before {
             content: "";
             position: fixed;
@@ -70,9 +75,11 @@
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 1.2rem;
+            /* Playfair Display für Header-Titel */
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
             font-weight: 600;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             color: var(--acc);
             text-transform: uppercase;
             margin: 0;
@@ -87,8 +94,7 @@
             background-size: contain;
         }
 
-        /* Gold-Glass Buttons */
-        .btn, .btn-close, .lang-btn {
+        .btn, .btn-close {
             background: rgba(212, 175, 55, 0.15);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
@@ -97,46 +103,39 @@
             padding: 8px 12px;
             border-radius: 10px;
             cursor: pointer;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
-            font-size: 0.75rem;
-            transition: all 0.2s ease;
+            font-size: 0.7rem;
             z-index: 20;
         }
 
-        .btn:active { transform: scale(0.9); }
-
-        /* Zutatenliste Tabellen-Look */
-        ul {
-            padding: 0;
-            margin: 20px 0;
-            list-style: none;
+        /* Rezept-Titel */
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 500;
+            font-size: 2.4rem;
+            margin: 0 0 15px 0;
+            color: var(--acc);
+            font-style: italic;
         }
 
+        /* Zutatenliste Tabellen-Look */
+        ul { padding: 0; margin: 20px 0; list-style: none; }
         ul li {
             display: flex;
             align-items: flex-start;
             padding: 12px 0;
             border-bottom: 0.5px solid rgba(212, 175, 55, 0.15);
         }
-
         ul li b {
             color: var(--acc);
             min-width: 90px;
             display: inline-block;
             flex-shrink: 0;
-            font-weight: 600;
-            text-align: left;
+            font-weight: 700;
         }
+        ul li span { flex-grow: 1; padding-left: 10px; line-height: 1.4; font-weight: 300; }
 
-        ul li span {
-            text-align: left;
-            flex-grow: 1;
-            padding-left: 10px;
-            line-height: 1.4;
-        }
-
-        /* Karten & Container */
         .container { padding: 20px; max-width: 1100px; margin: 0 auto; }
 
         .grid {
@@ -160,7 +159,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
             font-weight: 600;
             cursor: pointer;
             color: var(--acc);
@@ -175,6 +175,7 @@
             border-radius: 15px;
             padding: 18px;
             color: #fff;
+            font-family: 'Lato', sans-serif;
             font-size: 1.1rem;
             outline: none;
         }
@@ -182,12 +183,12 @@
         .list-item {
             background: var(--liquid-glass);
             backdrop-filter: var(--iphone-blur);
-            -webkit-backdrop-filter: var(--iphone-blur);
             padding: 20px;
             margin-bottom: 12px;
             border-radius: 20px;
-            border: 0.5px solid var(--ios-border);
             border-left: 6px solid var(--acc);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
         }
 
         .detail {
@@ -207,6 +208,9 @@
             align-items: center;
             gap: 15px;
             border: 0.5px solid var(--acc);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .rechner-box input {
@@ -214,11 +218,24 @@
             border: none;
             border-bottom: 2px solid var(--acc);
             color: var(--acc);
+            font-family: 'Lato', sans-serif;
             font-size: 1.2rem;
             width: 60px;
             text-align: center;
             outline: none;
         }
+
+        h3 {
+            font-family: 'Playfair Display', serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--acc);
+            padding-bottom: 5px;
+            color: var(--acc);
+        }
+
+        p { font-weight: 300; line-height: 1.8; }
 
         .hidden { display: none !important; }
     </style>
@@ -229,12 +246,13 @@
     <button id="back" class="btn hidden" onclick="goB()">Zurück</button>
     <div class="header-logo" id="logo-div"></div>
     <div id="titel">START</div>
-    <button id="close-app" class="btn-close hidden" onclick="exitAppSafe()">✕</button>
+    <button id="close-app" class="btn hidden" onclick="exitAppSafe()">✕</button>
 </header>
 
 <div class="container" id="app"></div>
 
 <script>
+// Passwort & Rezepte Logik (Rezepte Array leer lassen für deine Daten)
 const pw = "5556";
 if (sessionStorage.getItem("access") !== "true") {
     let input = prompt("Bitte Passwort eingeben:");
@@ -246,7 +264,6 @@ if (sessionStorage.getItem("access") !== "true") {
     }
 }
 
-// Hier kommen deine Rezepte rein
 const rezepte = [
             /* DEINE REZEPTE HIER */
 {
@@ -1334,18 +1351,6 @@ const t = (field) => {
     return field || "";
 };
 
-window.toggleLang = () => {
-    currentLang = currentLang === "de" ? "en" : "de";
-    localStorage.setItem("lang", currentLang);
-    render(); 
-};
-
-function renderHomeContent() {
-    const content = document.getElementById('home-content');
-    const pSet = [...new Set(rezepte.map(r => r.posten))].filter(p => p).sort();
-    content.innerHTML = `<div class="grid">${pSet.map(p => `<div class="card" onclick="openP('${p}')">${p}</div>`).join('')}</div>`;
-}
-
 function render() {
     const app = document.getElementById('app');
     const tit = document.getElementById('titel');
@@ -1362,7 +1367,7 @@ function render() {
         app.innerHTML = `
             <div style="display:flex; gap:10px; margin-bottom:20px;">
                 <input type="text" id="search-input" placeholder="${currentLang === 'de' ? 'Suchen...' : 'Search...'}" oninput="handleSearch(this.value)" autocomplete="off" style="flex-grow:1;">
-                <button class="btn" onclick="toggleLang()">${currentLang.toUpperCase()}</button>
+                <button class="btn" onclick="window.toggleLang()">${currentLang.toUpperCase()}</button>
             </div>
             <div id="home-content"></div>`;
         renderHomeContent();
@@ -1380,15 +1385,15 @@ function render() {
             tit.innerText = currentLang === 'de' ? "REZEPT" : "RECIPE";
             app.innerHTML = `
                 <div class="detail">
-                    <h2 style="font-weight:200; font-size:2rem; margin:0 0 15px 0; color:var(--acc);">${t(r.titel)}</h2>
+                    <h2>${t(r.titel)}</h2>
                     <div class="rechner-box">
-                        <span>${currentLang === 'de' ? 'Menge:' : 'Qty:'}</span>
+                        <span>${currentLang === 'de' ? 'Portionen:' : 'Servings:'}</span>
                         <input type="number" id="menge-input" value="1" oninput="liveUpdate('${r.id}')">
                     </div>
-                    <h3 style="border-bottom:1px solid var(--acc); padding-bottom:5px;">${currentLang === 'de' ? 'Zutaten' : 'Ingredients'}</h3>
+                    <h3>${currentLang === 'de' ? 'Zutaten' : 'Ingredients'}</h3>
                     <ul id="dynamic-z-list">${renderZutaten(r, 1)}</ul>
-                    <h3 style="margin-top:25px; border-bottom:1px solid var(--acc); padding-bottom:5px;">${currentLang === 'de' ? 'Zubereitung' : 'Preparation'}</h3>
-                    <p style="line-height:1.8; margin-top:10px;">${t(r.a).replace(/\n/g, '<br>')}</p>
+                    <h3 style="margin-top:25px;">${currentLang === 'de' ? 'Zubereitung' : 'Preparation'}</h3>
+                    <p>${t(r.a).replace(/\n/g, '<br>')}</p>
                 </div>`;
         }
     }
@@ -1402,25 +1407,28 @@ function renderZutaten(r, faktor) {
     }).join('');
 }
 
+window.toggleLang = () => { currentLang = currentLang === "de" ? "en" : "de"; localStorage.setItem("lang", currentLang); render(); };
 window.liveUpdate = (id) => {
     const r = rezepte.find(i => String(i.id) === String(id));
     const faktor = parseFloat(document.getElementById('menge-input').value) || 0;
     document.getElementById('dynamic-z-list').innerHTML = renderZutaten(r, faktor);
 };
-
 window.handleSearch = (query) => {
     const content = document.getElementById('home-content');
     const q = query.toLowerCase().trim();
     if (q.length < 2) { renderHomeContent(); return; }
     const filtered = rezepte.filter(r => t(r.titel).toLowerCase().includes(q));
-    content.innerHTML = filtered.map(r => `<div class="list-item" onclick="openR('${r.id}')"><small style="color:var(--acc)">${r.posten}</small><br>${t(r.titel)}</div>`).join('');
+    content.innerHTML = filtered.map(r => `<div class="list-item" onclick="openR('${r.id}')"><small style="color:var(--acc); font-family:Lato;">${r.posten}</small><br>${t(r.titel)}</div>`).join('');
 };
-
+function renderHomeContent() {
+    const content = document.getElementById('home-content');
+    const pSet = [...new Set(rezepte.map(r => r.posten))].filter(p => p).sort();
+    content.innerHTML = `<div class="grid">${pSet.map(p => `<div class="card" onclick="openP('${p}')">${p}</div>`).join('')}</div>`;
+}
 window.openP = (p) => { curP = p; stack.push('list'); render(); };
 window.openR = (id) => { stack.push(String(id)); render(); };
 window.goB = () => { stack.pop(); render(); };
 window.exitAppSafe = () => { if (window.Capacitor) Capacitor.Plugins.App.exitApp(); };
-
 render();
 </script>
 </body>
