@@ -8,105 +8,92 @@
     <meta name="robots" content="noindex, nofollow">
    <style>
     :root {
-        --bg-dark: #0a0a0a;
+        --bg-dark: #000000; /* Echtes Schwarz für S25 Ultra OLED */
         --acc: #d4af37;
         --txt-beige: #f4f1ea;
-        --border-gold: rgba(212, 175, 55, 0.3);
+        --border-gold: rgba(212, 175, 55, 0.4);
         
-        /* iPhone / High-End Android Liquid Glass Specs */
-        --liquid-glass: rgba(255, 255, 255, 0.07); 
-        --iphone-blur: blur(25px) saturate(210%) brightness(110%);
-        --ios-border: rgba(255, 255, 255, 0.15);
+        /* iPhone / S25 Liquid Glass Specs */
+        --liquid-glass: rgba(255, 255, 255, 0.05); 
+        /* Etwas weniger Blur, damit das Logo darunter erkennbar bleibt */
+        --iphone-blur: blur(15px) saturate(180%) brightness(120%);
+        --ios-border: rgba(255, 255, 255, 0.18);
     }
 
     body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         background-color: var(--bg-dark);
         color: var(--txt-beige);
         margin: 0;
         min-height: 100vh;
         -webkit-tap-highlight-color: transparent;
         padding-bottom: calc(50px + env(safe-area-inset-bottom));
-        /* Wichtig für Mobile Fix */
-        overflow-x: hidden; 
     }
 
-    /* NEU: Wasserzeichen Fix für S25 Ultra */
+    /* FIX: Wasserzeichen für Samsung OLED Displays */
     body::before {
         content: "";
         position: fixed;
-        /* Zentrierung erzwingen */
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        /* Bildquelle */
-        background-image: url("B100.png");
-        background-repeat: no-repeat;
-        background-position: center;
-        /* Größe auf Mobile deutlich erhöhen */
+        background: url("B100.png") no-repeat center center;
         background-size: contain;
-        width: 80vw; /* 80% der Bildschirmbreite */
-        height: 80vw;
+        width: 85vw; /* Schön groß auf dem Handy */
+        height: 85vw;
         max-width: 500px;
-        /* Deckkraft leicht erhöhen, damit es durch den starken Blur scheint */
-        opacity: 0.12; 
-        z-index: -1;
+        /* Wir gehen auf 0.2, damit es trotz Glas-Effekt sichtbar ist */
+        opacity: 0.2; 
+        z-index: 0; /* Vor dem Background, hinter dem Content */
         pointer-events: none;
+    }
+
+    /* Alle Inhalte müssen ÜBER das Logo (z-index 1+) */
+    header, .container {
+        position: relative;
+        z-index: 10;
     }
 
     header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: calc(20px + env(safe-area-inset-top)) 30px 20px 30px;
-        background: rgba(15, 15, 15, 0.65);
+        padding: calc(20px + env(safe-area-inset-top)) 25px 20px 25px;
+        /* Stärkeres Glas im Header */
+        background: rgba(0, 0, 0, 0.6);
         backdrop-filter: var(--iphone-blur);
         -webkit-backdrop-filter: var(--iphone-blur);
         position: sticky;
         top: 0;
-        z-index: 1000;
-        border-bottom: 0.5px solid var(--ios-border);
+        border-bottom: 0.5px solid var(--border-gold);
     }
 
     .header-logo {
-        width: 180px;
-        height: 50px;
+        width: 160px;
+        height: 45px;
         background: url("Logo100.png") no-repeat left center;
         background-size: contain;
     }
 
     #titel {
-        font-size: 1.3rem;
-        font-weight: 500;
-        letter-spacing: 1.5px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        letter-spacing: 2px;
         color: var(--acc);
         text-transform: uppercase;
-        flex-grow: 1;
         text-align: center;
+        flex-grow: 1;
     }
-
-    .btn, .btn-close {
-        background: var(--acc);
-        border: none;
-        color: #000;
-        padding: 10px 16px;
-        border-radius: 12px;
-        cursor: pointer;
-        font-weight: 600;
-        text-transform: uppercase;
-        font-size: 0.75rem;
-        transition: transform 0.2s ease;
-    }
-
-    .btn:active { transform: scale(0.9); }
-
-    .container { padding: 20px; max-width: 1100px; margin: 0 auto; }
 
     .grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        grid-template-columns: 1fr; /* Auf Mobile einspaltig für besseren Glas-Effekt */
         gap: 20px;
-        margin-top: 30px;
+        margin-top: 25px;
+    }
+
+    @media (min-width: 600px) {
+        .grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
     }
 
     /* Liquid Glass Cards */
@@ -114,91 +101,71 @@
         background: var(--liquid-glass);
         backdrop-filter: var(--iphone-blur);
         -webkit-backdrop-filter: var(--iphone-blur);
-        height: 140px;
+        height: 150px;
         border-radius: 24px;
         border: 0.5px solid var(--ios-border);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         font-weight: 600;
         cursor: pointer;
-        transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
         color: var(--acc);
         text-transform: uppercase;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        letter-spacing: 1.5px;
+        /* Edler Schatten */
+        box-shadow: 0 15px 35px rgba(0,0,0,0.6);
     }
 
     .card:active { 
-        transform: scale(0.95); 
+        transform: scale(0.94); 
         background: rgba(255, 255, 255, 0.15);
     }
 
+    /* Suchfeld */
     #search-input {
         width: 100%;
-        background: rgba(255, 255, 255, 0.06);
-        backdrop-filter: var(--iphone-blur);
-        -webkit-backdrop-filter: var(--iphone-blur);
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         border: 0.5px solid var(--ios-border);
-        border-radius: 16px;
-        padding: 16px 20px;
+        border-radius: 15px;
+        padding: 18px;
         color: #fff;
         font-size: 1.1rem;
         outline: none;
         box-sizing: border-box;
     }
 
+    /* Listen */
     .list-item {
         background: var(--liquid-glass);
         backdrop-filter: var(--iphone-blur);
         -webkit-backdrop-filter: var(--iphone-blur);
-        padding: 22px;
-        margin-bottom: 12px;
+        padding: 25px;
+        margin-bottom: 15px;
         border-radius: 20px;
         border: 0.5px solid var(--ios-border);
         border-left: 6px solid var(--acc);
         font-size: 1.2rem;
-        cursor: pointer;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.4);
     }
-
-    .detail {
-        background: rgba(20, 20, 20, 0.85);
-        backdrop-filter: blur(40px);
-        -webkit-backdrop-filter: blur(40px);
-        border: 0.5px solid var(--ios-border);
-        border-radius: 32px; 
-        padding: 30px;
-    }
-
-    .rechner-box {
-        background: var(--liquid-glass);
-        backdrop-filter: var(--iphone-blur);
-        padding: 20px;
-        border-radius: 18px;
-        border: 0.5px solid var(--border-gold);
-    }
-
-    .rechner-box input {
-        width: 80px;
-        background: transparent;
-        border: none;
-        border-bottom: 2px solid var(--acc);
-        color: var(--acc);
-        font-size: 1.4rem;
-        text-align: center;
-    }
-
-    ul { list-style: none; padding: 0; }
-    li { padding: 15px 0; border-bottom: 0.5px solid rgba(255, 255, 255, 0.05); display: flex; gap: 12px; }
-    b { color: var(--acc); min-width: 90px; display: inline-block; }
 
     .hidden { display: none !important; }
 
-    @media (max-width: 600px) {
-        #titel { font-size: 1.1rem; }
-        header { padding: calc(15px + env(safe-area-inset-top)) 20px 15px 20px; }
-        .header-logo { width: 140px; }
+    /* Button Style (oben rechts X) */
+    .btn-close {
+        background: var(--acc);
+        border: none;
+        padding: 10px;
+        border-radius: 10px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
     }
 </style>
 </head>
