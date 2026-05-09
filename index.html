@@ -29,16 +29,22 @@
         padding-bottom: calc(50px + env(safe-area-inset-bottom));
     }
 
-    /* Wasserzeichen Hintergrund */
-    body::before {
-        content: "";
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: url("B100.png") no-repeat center center;
-        background-size: 25%;
-        opacity: 0.05;
-        z-index: -1;
-    }
+   /* Wasserzeichen Hintergrund - Optimiert für Mobile */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("B100.png") no-repeat center center;
+            /* Auf dem PC 25%, auf dem Handy wird es durch 'contain' automatisch angepasst */
+            background-size: contain; 
+            width: 60%; /* Begrenzt die Breite auf dem Handy, damit es nicht den Rand berührt */
+            height: auto;
+            max-width: 400px; /* Verhindert, dass es auf dem PC zu riesig wird */
+            margin: auto;
+            opacity: 0.08; /* Etwas höher, um durch das Liquid Glass zu scheinen */
+            z-index: -1;
+            pointer-events: none;
+        }
 
     header {
         display: flex;
