@@ -266,15 +266,18 @@
 <body>
 
 <header>
-    <button id="back" class="btn hidden" onclick="goB()">Zurück</button>
-    
-    <!-- Das Logo ist nun in einen Link gehüllt, der zur Speisekarte führt -->
+    <!-- Logo bleibt links und führt zur Speisekarte -->
     <a href="https://100biere.de/speisekarte/" class="header-logo-link">
         <div class="header-logo" id="logo-div"></div>
     </a>
     
     <div id="titel">START</div>
-    <button id="close-app" class="btn hidden" onclick="exitAppSafe()">✕</button>
+
+    <!-- Der Zurück-Button ist jetzt rechts platziert -->
+    <div class="header-right">
+        <button id="back" class="btn hidden" onclick="goB()">Zurück</button>
+        <button id="close-app" class="btn hidden" onclick="exitAppSafe()">✕</button>
+    </div>
 </header>
 
 <div class="container" id="app"></div>
